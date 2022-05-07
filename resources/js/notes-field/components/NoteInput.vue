@@ -17,8 +17,8 @@
       rows="3"
       :placeholder="placeholder"
       class="form-control w-full form-input form-input-bordered py-3 h-auto"
-      v-bind:value="value"
-      v-on:input="$emit('input', $event.target.value)"
+      v-bind:value="modelValue"
+      v-on:input="$emit('update:modelValue', $event.target.value)"
       v-on:keydown.enter="onEnter"
     />
 
@@ -27,7 +27,7 @@
         class="btn btn-default btn-primary inline-flex items-center relative ml-auto"
         @click="$emit('onSubmit')"
         type="button"
-        :disabled="loading || !value"
+        :disabled="loading || !modelValue"
       >
         {{ __('novaNotesField.addNote') }}
       </button>
@@ -37,10 +37,11 @@
 
 <script>
 export default {
-  props: ['placeholder', 'value', 'loading', 'trixEnabled', 'fullWidth'],
+  props: ['placeholder', 'modelValue', 'modelModifiers', 'loading', 'trixEnabled', 'fullWidth'],
+  emits: ['update:modelValue'],
   methods: {
     initialize() {
-      this.$refs.trixEditor.editor.loadHTML(this.value);
+      this.$refs.trixEditor.editor.loadHTML(this.modelValue);
     },
 
     onEnter(e) {
@@ -54,7 +55,7 @@ export default {
   },
 
   watch: {
-    value(newValue, oldValue) {
+    modelValue(newValue, oldValue) {
       if (this.trixEnabled && this.$refs.trixEditor) {
         if (!newValue && !!oldValue) this.$refs.trixEditor.editor.loadHTML('');
       }

@@ -39,6 +39,8 @@
 </template>
 
 <script>
+import moment from 'moment';
+
 export default {
   props: ['note', 'dateFormat', 'fullWidth'],
   computed: {
