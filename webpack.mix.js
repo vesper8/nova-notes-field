@@ -1,10 +1,11 @@
-let mix = require('laravel-mix')
-let path = require('path')
-
+const mix = require('laravel-mix')
 require('./nova.mix')
 
 mix
   .setPublicPath('dist')
   .js('resources/js/field.js', 'js')
   .vue({ version: 3 })
-  .nova('vendor/package')
+  .postCss('resources/css/field.css', 'css', [
+    require('tailwindcss'),
+  ])
+  .nova('optimistdigital/nova-notes-field')

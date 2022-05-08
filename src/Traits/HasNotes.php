@@ -17,7 +17,7 @@ trait HasNotes
      **/
     public function addNote($note, $user = true, $system = true)
     {
-        $user = $user ? Auth::user() : null;
+        $user = $user ? Auth::guard(config('nova.guard'))->user() : null;
         return $this->notes()->create([
             'text' => $note,
             'created_by' => isset($user) ? $user->id : null,

@@ -32,6 +32,7 @@ class NotesFieldServiceProvider extends ServiceProvider
 
         // Serve assets
         Nova::serving(function (ServingNova $event) {
+            Nova::style('nova-notes-field', __DIR__ . '/../dist/css/field.css');
             Nova::script('nova-notes-field', __DIR__ . '/../dist/js/field.js');
         });
 
